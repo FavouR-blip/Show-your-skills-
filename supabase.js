@@ -1,0 +1,1 @@
+// JS logic for Supabase will be here
