@@ -1,24 +1,52 @@
-<!DOCTYPE html><html><head><title>Sign Up</title></head><body><h1>Sign Up Page</h1></body></html>
-<script type="module">
-  import { supabase } from './js/supabase.js'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    </head>
+<body>
+    <h1>Sign Up</h1>
 
-  const form = document.querySelector('form')
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault()
+    <form id="signupForm">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
 
-    const email = document.getElementById('email').value
-    const password = document.getElementById('password').value
+    <p>Already have an account? <a href="login.html">Login</a></p>
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password
-    })
+    <script type="module">
+        // IMPORTANT: The path below assumes supabase.js is in the same directory as signup.html
+        import { supabase } from './supabase.js';
 
-    if (error) {
-      alert('Error signing up: ' + error.message)
-    } else {
-      alert('Account created! Please check your email to confirm.')
-      window.location.href = 'login.html'
-    }
-  })
-</script>
+        const form = document.getElementById('signupForm'); // Get the form by its ID
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent the default form submission
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                alert('Sign up failed: ' + error.message);
+                console.error('Sign Up Error:', error); // Log the error for debugging
+            } else {
+                alert('Account created! Please check your email to confirm.');
+                window.location.href = 'login.html'; // Redirect to login page after successful signup
+            }
+        });
+    </script>
+</body>
+</html>
+
