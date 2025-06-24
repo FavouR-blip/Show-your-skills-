@@ -1,1 +1,51 @@
-<!DOCTYPE html><html><head><title>Login</title></head><body><h1>Login Page</h1></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    </head>
+<body>
+    <h1>Login</h1>
+
+    <form id="loginForm">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+
+    <script type="module">
+        // IMPORTANT: The path below assumes supabase.js is in the same directory as login.html
+        import { supabase } from './supabase.js';
+
+        const form = document.getElementById('loginForm'); // Get the form by its ID
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevent the default form submission
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+            if (error) {
+                alert('Login failed: ' + error.message);
+                console.error('Login Error:', error); // Log the error for debugging
+            } else {
+                alert('Login successful!');
+                window.location.href = 'index.html'; // Redirect to your main page
+            }
+        });
+    </script>
+</body>
+</html>
