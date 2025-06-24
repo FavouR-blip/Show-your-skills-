@@ -24,27 +24,28 @@
 
     <script type="module">
    // THIS IMPORT MUST BE THE VERY FIRST THING IN THE SCRIPT BLOCK
-   import { supabase } from './supabase.js'; // NOTE: It should be `export const supabase` in your supabase.js, so you import with curly braces `{ supabase }` here.
+   import { supabase } from './supabase.js'; // Note the curly braces around supabase!
 
    // 1. Alert that the script is loading. This should be the first alert you see.
    alert('1. Signup Script is loading!');
 
-   // 2. Alert that Supabase has been imported.
+   // 2. Alert that Supabase has been imported and is ready to be used.
    alert('2. Signup: Supabase is ready!');
 
-   // Get the form element.
+   // Get the form element by its ID.
    const form = document.getElementById('signupForm');
 
-   // 3. Alert to check if the form element was found.
-   alert('3. Signup: Form found? ' + (form ? 'YES' : 'NO')); // Will say YES or NO
+   // 3. Alert to check if the form element was successfully found.
+   alert('3. Signup: Form found? ' + (form ? 'YES' : 'NO')); // This will pop up YES or NO
 
    // Attach the event listener to the form's submit event.
-   if (form) { // Add this check just in case the form wasn't found
+   // This 'if (form)' check ensures we only try to add a listener if the form exists.
+   if (form) {
        form.addEventListener('submit', async (e) => {
-           // 4. Alert that the button was tapped (inside the event listener).
+           // 4. Alert that the button was tapped (this alert appears ONLY after you click the button).
            alert('4. Signup: Sign Up button was tapped!');
 
-           e.preventDefault(); // Stop the page from reloading on form submit
+           e.preventDefault(); // Stop the page from reloading when the form submits.
 
            // Get the values from the email and password input fields.
            const email = document.getElementById('email').value;
@@ -62,17 +63,20 @@
            if (error) {
                // 6. Alert for failed signup with the error message from Supabase.
                alert('6. Signup FAILED! Error: ' + error.message);
-               console.error('Sign up error:', error); // This won't be seen on your phone, but good for when you get a computer.
+               // console.error('Sign up error:', error); // (This line is for debugging with a computer)
            } else {
                // 6. Alert for successful signup.
                alert('6. Signup SUCCESS! Please check your email to confirm.');
-               window.location.href = 'login.html'; // Redirect to login page.
+               window.location.href = 'login.html'; // Redirect to login page after successful signup.
            }
        });
    } else {
-       alert('Error: Signup form not found by ID!'); // This will tell us if the form ID is wrong
+       // This alert will only show if the form with ID 'signupForm' was not found.
+       alert('Error: Signup form not found by ID! Please check your HTML ID.');
    }
 </script>
+
+
 
 </body>
 </html>
